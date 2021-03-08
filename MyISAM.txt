@@ -1,0 +1,15 @@
+MyISAM is based on the older (and no longer available) ISAM storage engine 
+but has many useful extensions.
+
+Each MyISAM table is stored on disk in two files. 
+The files have names that begin with the table name and have an 
+extension to indicate the file type. 
+The data file has an .MYD (MYData) extension. 
+The index file has an .MYI (MYIndex) extension. 
+The table definition is stored in the MySQL data dictionary.
+
+To specify explicitly that you want a MyISAM table, 
+indicate that with an ENGINE table option:
+
+
+CREATE TABLE t (i INT) ENGINE = MYISAM;

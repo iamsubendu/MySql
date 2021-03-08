@@ -1,0 +1,42 @@
+Stop mysql
+
+sudo /etc/init.d/mysql stop
+Or for other distribution versions:
+
+sudo /etc/init.d/mysqld stop
+Start MySQL in safe mode
+
+sudo mysqld_safe --skip-grant-tables 
+Log into MySQL using root
+
+mysql -u root
+Select the MySQL database to use
+
+
+-- MySQL version < 5.7
+update user set password=PASSWORD("mynewpassword") where User='root';
+
+-- MySQL 5.7, mysql.user table "password" field -> "authentication_string"
+
+update user set authentication_string=password('mynewpassword') where user='root';
+Flush the privileges
+
+flush privileges;
+Restart the server
+
+quit
+Stop and start the server again
+
+Ubuntu and Debian:
+
+sudo /etc/init.d/mysql stop
+...
+sudo /etc/init.d/mysql start
+On CentOS, Fedora, and RHEL:
+
+    sudo /etc/init.d/mysqld stop
+    ...
+    sudo /etc/init.d/mysqld start
+Login with a new password
+
+mysql -u root -p

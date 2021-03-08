@@ -1,0 +1,36 @@
+You can create several tables and views and grant privileges in one 
+operation using the CREATE SCHEMA statement. The CREATE SCHEMA statement 
+is useful if you want to guarantee the creation of several tables, views, 
+and grants in one operation. If an individual table, view or grant fails, 
+the entire statement is rolled back. None of the objects are created, 
+nor are the privileges granted.
+
+the CREATE SCHEMA statement can include only CREATE TABLE, CREATE VIEW, 
+and GRANT statements.
+
+In the oracle database, the schema can be used to represent a part of the database.
+
+The following statement creates two tables and a view that joins data 
+from the two tables:
+
+CREATE SCHEMA dbName
+    CREATE TABLE dept (
+        deptno NUMBER(3,0) PRIMARY KEY,
+        dname VARCHAR2(15),
+        loc VARCHAR2(25))
+    CREATE TABLE emp (
+        empno NUMBER(5,0) PRIMARY KEY,
+        ename VARCHAR2(15) NOT NULL,
+        job VARCHAR2(10),
+        mgr NUMBER(5,0),
+        hiredate DATE DEFAULT (sysdate),
+        sal NUMBER(7,2),
+        comm NUMBER(7,2),
+        deptno NUMBER(3,0) NOT NULL
+        CONSTRAINT dept_fkey REFERENCES dept)
+   CREATE VIEW sales_staff AS
+        SELECT empno, ename, sal, comm
+        FROM emp
+        WHERE deptno = 30
+        WITH CHECK OPTION CONSTRAINT sales_staff_cnst
+        GRANT SELECT ON sales_staff TO human_resources;

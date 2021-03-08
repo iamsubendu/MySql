@@ -1,0 +1,54 @@
+As you transition away from MyISAM tables, lower the value of the 
+key_buffer_size configuration option to free memory no longer needed for 
+caching results. Increase the value of the innodb_buffer_pool_size 
+configuration option, which performs a similar role of allocating 
+cache memory for InnoDB tables. The InnoDB buffer pool caches both 
+table data and index data, speeding up lookups for queries and keeping 
+query results in memory for reuse.
+==================================================================
+
+Converting an Existing Table:
+
+To convert a non-InnoDB table to use InnoDB use ALTER TABLE:
+
+ALTER TABLE table_name ENGINE=InnoDB;
+
+==================================================================
+
+Transferring Data
+To transfer a large volume of data into an empty InnoDB table created 
+as shown in the previous section, insert the rows with 
+
+
+INSERT INTO innodb_table SELECT * FROM myisam_table ORDER BY 
+primary_key_columns.
+
+
+You can also create the indexes for the InnoDB table after inserting the data. 
+Historically, creating new secondary indexes was a slow operation for InnoDB, 
+but now you can create the indexes after the data is loaded with 
+relatively little overhead from the index creation step.
+
+If you have UNIQUE constraints on secondary keys, 
+you can speed up a table import by turning off the uniqueness checks 
+temporarily during the import operation:
+
+
+SET unique_checks=0;
+... import operation ...
+SET unique_checks=1;
+
+
+For big tables, this saves disk I/O because InnoDB can use its change buffer 
+to write secondary index records as a batch. Be certain that the data 
+contains no duplicate keys. unique_checks permits but does not require 
+storage engines to ignore duplicate keys.
+
+For better control over the insertion process, you can insert big 
+tables in pieces:
+
+
+INSERT INTO newtable SELECT * FROM oldtable
+   WHERE yourkey > something AND yourkey <= somethingelse;
+
+=========================================================================

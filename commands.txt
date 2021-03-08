@@ -1,0 +1,59 @@
+for linux
+
+Connecting to the MySQL Server with the mysql Client
+
+sudo mysql / mysql -u root / mysql -u root -p
+=> for mysql terminal
+
+service mysql status => to check out mysql service is running or not
+
+quit;
+
+to start server of mariadb:-
+
+service mariadb start
+
+to check
+
+systemctl status mariadb.service
+
+==========================================================================
+
+show databases;
+
+create database dbName;
+
+use dbName;
+
+create table tableName (
+id int auto_increment primary key,
+user varchar(255) not null//it mustn't be empty,
+email char(60) not null,
+pswd char(60),
+createdAt timestamp);
+
+explain tbName;
+
+describe tbName;
+
+insert into tbName(values u want to update as id, user, pswd)
+value(1, "yugsig",SHA("fg8iug"));
+//by SHA password will get hashed that is in encrypted from
+
+select * from tbName;
+
+
+•	SELECT - extracts data from a database
+•	UPDATE - updates data in a database
+•	DELETE - deletes data from a database
+•	INSERT INTO - inserts new data into a database
+•	CREATE DATABASE - creates a new database
+•	ALTER DATABASE - modifies a database
+•	CREATE TABLE - creates a new table
+•	ALTER TABLE - modifies a table
+•	DROP TABLE - deletes a table
+•	CREATE INDEX - creates an index (search key)
+•	DROP INDEX - deletes an index
+
+
+

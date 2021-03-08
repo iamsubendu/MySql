@@ -1,0 +1,62 @@
+******create a database******
+
+set @@default_storage_engine = 'MyISAM';
+
+MyISAM was the default storage engine for the MySQL relational database 
+management system 
+
+MyISAM provides table-level locking. 
+(MySQL uses table-level locking for MyISAM , MEMORY , and MERGE tables, 
+permitting only one session to update those tables at a time. 
+This locking level makes these storage engines more suitable for 
+read-only, read-mostly, or single-user applications.)
+
+It is used mostly in Web and data warehousing. 
+(Warehousing :- is a system used for reporting and data analysis, 
+and is considered a core component of business intelligence)
+Memory storage engine creates tables in memory. 
+It is the fastest engine.
+
+=========================================================================
+
+create database dbName;
+
+use dbName;
+
+CREATE TABLE Mahesh(
+    ->        id INT NOT NULL AUTO_INCREMENT,
+    ->        PRIMARY KEY (id),
+    ->        data VARCHAR(20) NOT NULL
+    -> ) ENGINE = MyISAM;
+
+desc tablename;
+
+show tables;
+
+SELECT TABLE_NAME,
+   ->  ENGINE
+   -> FROM information_schema.TABLES
+   -> WHERE TABLE_SCHEMA = 'business' and ENGINE = 'MyISAM';
+
+INSERT INTO StudentRecordWithMyISAM (id , studentname , studentage)
+values(1 , 'Nani' , '21');
+
+ select * from StudentRecordWithMyISAM;
+
+==========================================================================
+
+change tables from myisam to innodb without losing any data 
+in the tables.
+
+use  StudentRecordWithMyISAM ;
+desc  StudentRecordWithMyISAM ;
+desc  StudentRecordWithMyISAM ;
+
+alter table  StudentRecordWithMyISAM ENGINE=InnoDB;
+
+show create table StudentRecordWithMyISAM;
+
+set @@default_storage_engine = 'MyISAM';
+show engines;
+
+ show table status from StudentRecordWithMyISAM;
